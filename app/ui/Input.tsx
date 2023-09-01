@@ -1,5 +1,5 @@
 import { InputHTMLAttributes, forwardRef } from "react";
-import { cn } from "../lib/cn";
+import { cn } from "../utils/cn";
 
 export type FormInputProps = {
   label: string;
@@ -51,10 +51,9 @@ const Input: React.FC<FormInputProps> = forwardRef<
             errorMessage && "focus:ring-rose-500",
             otherProps.disabled && "opacity-50 cursor-default"
           )}
-          {...otherProps}
           name={name}
           ref={ref}
-          value={otherProps.value || ""}
+          {...otherProps}
         />
       </div>
     </div>

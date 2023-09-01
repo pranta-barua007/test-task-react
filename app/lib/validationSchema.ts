@@ -10,7 +10,7 @@ export const sectorSchema = z.object({
 });
 
 export const applicationFormSchema = z.object({
-  name: z
+  fullName: z
     .string()
     .min(3, { message: "Must be at least three characters long" }),
   sectors: z
