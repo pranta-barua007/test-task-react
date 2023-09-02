@@ -4,8 +4,9 @@ export const sectorSchema = z.object({
   id: z.string(),
   name: z.string().min(3),
   value: z.number(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  hasNext: z.boolean(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
   parentId: z.string().optional(),
 });
 

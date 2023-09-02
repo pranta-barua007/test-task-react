@@ -1,10 +1,10 @@
 export type Sector = {
     id: string;
     name: string;
-    value: number;
-    createdAt: Date;
-    updatedAt: Date;
+    value: number | string;
+    createdAt: string;
+    updatedAt: string;
     hasNext: boolean;
-    parentId: string | null;
+    parentId?: string | null;
     subSectors?: Sector[]
 }

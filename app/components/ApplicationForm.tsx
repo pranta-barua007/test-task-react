@@ -12,10 +12,21 @@ import Button from "../ui/Button";
 import Input from "../ui/Input";
 
 import { cn } from "../utils/cn";
+import { Sector } from "../types/types";
+import GroupSelect from "../ui/select/GroupSelect";
 
-const ApplicationForm = () => {
+type IApplicationForm = {
+  initialSectors: Sector[]
+}
+
+const ApplicationForm = ({ initialSectors }: IApplicationForm) => {
   const methods = useForm<IApplicationFormSchema>({
     resolver: zodResolver(applicationFormSchema),
+    defaultValues: ({
+      fullName: '',
+      sectors: [],
+      consent: false
+    })
   });
 
   const {
@@ -23,17 +34,26 @@ const ApplicationForm = () => {
     handleSubmit,
     register,
     formState: { errors },
+    setValue, 
+    getValues
   } = methods;
 
   const onSubmit: SubmitHandler<IApplicationFormSchema> = (data) =>
     console.log(data);
+
     
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form className="w-full h-auto" onSubmit={handleSubmit(onSubmit)}>
       <Input
         label="Name"
         errorMessage={errors.fullName?.message}
         {...register("fullName")}
+      />
+      <GroupSelect 
+        multiple
+        options={initialSectors}
+        value={getValues('sectors')}
+        onChange={(v) => setValue('sectors', v as any, {shouldValidate: true})}
       />
       <div className="flex">
         <input
@@ -45,6 +65,8 @@ const ApplicationForm = () => {
           Agree to terms
         </p>
       </div>
+      {JSON.stringify(errors
+        )}
       <Button type="submit">Submit</Button>
     </form>
   );
