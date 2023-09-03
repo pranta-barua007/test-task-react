@@ -1,14 +1,24 @@
+.label {
+  font-size: 0.875rem/* 14px */;
+  line-height: 1.25rem/* 20px */;
+}
+
+.label.error {
+  color:hsl(0, 88%, 47%);
+}
+
 .container {
   position: relative;
   width: 100%;
   min-height: 1.5em;
-  border: 0.05em solid #777;
+  border: 0.05em solid #dbdbdb;
   display: flex;
   align-items: center;
   gap: 0.5em;
   padding: 0.5em;
   border-radius: 0.25em;
   outline: none;
+  margin-top: 0.5rem/* 8px */;
 }
 
 .container:focus {

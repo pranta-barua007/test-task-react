@@ -36,17 +36,18 @@ const Input: React.FC<FormInputProps> = forwardRef<
             w-full 
             rounded-md 
             border-0 
-            py-1.5 
+            py-3
+            pl-1.5 
             text-gray-900 
             shadow-sm 
             ring-1 
             ring-inset 
             ring-gray-300 
             placeholder:text-gray-400 
-            focus:ring-2 
+            focus:ring-0.5 
             focus:ring-inset 
             focus:ring-sky-600 
-            sm:text-sm 
+            sm:text-lg 
             sm:leading-6`,
             errorMessage && "focus:ring-rose-500",
             otherProps.disabled && "opacity-50 cursor-default"

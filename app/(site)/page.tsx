@@ -16,8 +16,13 @@ export default async function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <ApplicationForm initialSectors={initialSectors}/>
+    <main className="">
+      <div className="flex flex-col items-center justify-between p-24 gap-8">
+        <div className="w-4/12 bg-white p-20 rounded-md">
+          <h2 className="text-3xl font-bold text-center mb-8">Application Form</h2>
+          <ApplicationForm initialSectors={initialSectors}/>
+        </div>
+      </div>
     </main>
   )
 }

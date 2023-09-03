@@ -10,23 +10,23 @@ import {
 
 import Button from "../ui/Button";
 import Input from "../ui/Input";
+import GroupSelect from "./GroupSelect/GroupSelect";
 
 import { cn } from "../utils/cn";
-import { Sector } from "../types/types";
-import GroupSelect from "../ui/select/GroupSelect";
+import { type Sector } from "../types/types";
 
 type IApplicationForm = {
-  initialSectors: Sector[]
-}
+  initialSectors: Sector[];
+};
 
 const ApplicationForm = ({ initialSectors }: IApplicationForm) => {
   const methods = useForm<IApplicationFormSchema>({
     resolver: zodResolver(applicationFormSchema),
-    defaultValues: ({
-      fullName: '',
+    defaultValues: {
+      fullName: "",
       sectors: [],
-      consent: false
-    })
+      consent: false,
+    },
   });
 
   const {
@@ -34,40 +34,43 @@ const ApplicationForm = ({ initialSectors }: IApplicationForm) => {
     handleSubmit,
     register,
     formState: { errors },
-    setValue, 
-    getValues
+    setValue,
+    getValues,
   } = methods;
 
   const onSubmit: SubmitHandler<IApplicationFormSchema> = (data) =>
     console.log(data);
 
-    
   return (
-    <form className="w-full h-auto" onSubmit={handleSubmit(onSubmit)}>
-      <Input
-        label="Name"
-        errorMessage={errors.fullName?.message}
-        {...register("fullName")}
-      />
-      <GroupSelect 
-        multiple
-        options={initialSectors}
-        value={getValues('sectors')}
-        onChange={(v) => setValue('sectors', v as any, {shouldValidate: true})}
-      />
-      <div className="flex">
-        <input
-          type="checkbox"
-          className="checked:bg-blue-500 mr-2"
-          {...register("consent")}
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex flex-col gap-4">
+        <Input
+          label="Name"
+          errorMessage={errors.fullName?.message}
+          {...register("fullName")}
         />
-        <p className={cn(errors.consent ? "text-rose-500" : "text-black")}>
-          Agree to terms
-        </p>
+        <GroupSelect
+          multiple
+          options={initialSectors}
+          value={getValues("sectors")}
+          onChange={(v) =>
+            setValue("sectors", v as any, { shouldValidate: true })
+          }
+          label="Select Desiered Sectors"
+          errorMessage={errors.sectors?.message}
+        />
+        <div className="flex">
+          <input
+            type="checkbox"
+            className="checked:bg-blue-500 mr-2"
+            {...register("consent")}
+          />
+          <p className={cn(errors.consent ? "text-rose-500" : "text-black")}>
+            Agree to terms
+          </p>
+        </div>
+        <Button type="submit">Submit</Button>
       </div>
-      {JSON.stringify(errors
-        )}
-      <Button type="submit">Submit</Button>
     </form>
   );
 };

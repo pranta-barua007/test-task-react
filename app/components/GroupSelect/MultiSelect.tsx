@@ -5,11 +5,12 @@ import React from "react";
 
 import styles from "./multiSelect.module.css";
 import axios from "axios";
+import RightIcon from "@/app/ui/RightIcon";
 
 type IMultiSelect = {
   option: Sector;
   isOpen?: boolean;
-  index: number;
+  index?: number;
   highlightedIndex: number;
   onClickHandler: (v: any) => void;
   setIsOpen: (v: false) => void;
@@ -37,7 +38,7 @@ function MultiSelect({
     option.subSectors &&
       option.subSectors.length > 0 &&
       setHasMoreData(option.subSectors);
-  }, []);
+  }, [option.subSectors]);
 
   return (
     <li
@@ -52,21 +53,20 @@ function MultiSelect({
         !option.hasNext && onClickHandler(option);
         !option.hasNext && setIsOpen(false);
       }}
-      onMouseEnter={() => setHighlightedIndex(index)}
+      onMouseEnter={() => setHighlightedIndex(option.value as number)}
       key={option.value}
       className={`${styles.option} ${
         isOptionSelected(option) ? styles.selected : ""
-      } ${index === highlightedIndex ? styles.highlighted : ""}`}
+      } ${option.value === highlightedIndex ? styles.highlighted : ""}`}
     >
-      {option.name}&nbsp;{option.hasNext && !option.subSectors ? ">" : null}
+      <span>{option.name}&nbsp;{option.hasNext && !option.subSectors ? <RightIcon /> : null}</span>
       {hasMoreData && (
         <ul>
-          {hasMoreData.map((sector, index) => {
+          {hasMoreData.map((sector, _index) => {
             return (
               <MultiSelect
                 key={sector.value}
                 option={sector}
-                index={index}
                 highlightedIndex={highlightedIndex}
                 setHighlightedIndex={setHighlightedIndex}
                 onClickHandler={onClickHandler}
