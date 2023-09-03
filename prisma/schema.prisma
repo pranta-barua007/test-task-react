@@ -20,6 +20,16 @@ model Sector {
   parentId   String?  @db.ObjectId
   parent     Sector?  @relation("ChildSectors", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   subSectors Sector[] @relation("ChildSectors")
+
+  submission    Submission[] @relation(fields: [submissionIds], references: [id])
+  submissionIds String[]     @db.ObjectId
 }
 
 // named relationship key `ChildSectors`
+
+model Submission {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  fullName  String
+  sectors   Sector[] @relation(fields: [sectorIds], references: [id])
+  sectorIds String[] @db.ObjectId
+}

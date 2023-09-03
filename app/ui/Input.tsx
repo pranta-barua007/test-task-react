@@ -37,7 +37,7 @@ const Input: React.FC<FormInputProps> = forwardRef<
             rounded-md 
             border-0 
             py-3
-            pl-1.5 
+            px-1.5 
             text-gray-900 
             shadow-sm 
             ring-1 

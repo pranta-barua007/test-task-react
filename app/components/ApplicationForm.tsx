@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -14,32 +16,58 @@ import GroupSelect from "./GroupSelect/GroupSelect";
 
 import { cn } from "../utils/cn";
 import { type Sector } from "../types/types";
+import axios from "axios";
 
 type IApplicationForm = {
   initialSectors: Sector[];
+  asyncDefaultValues?: IApplicationFormSchema;
+  applicationId?: string;
 };
 
-const ApplicationForm = ({ initialSectors }: IApplicationForm) => {
+const ApplicationForm = ({
+  initialSectors,
+  asyncDefaultValues,
+  applicationId,
+}: IApplicationForm) => {
+  const router = useRouter();
   const methods = useForm<IApplicationFormSchema>({
     resolver: zodResolver(applicationFormSchema),
-    defaultValues: {
-      fullName: "",
-      sectors: [],
-      consent: false,
-    },
+    defaultValues: asyncDefaultValues
+      ? asyncDefaultValues
+      : {
+          fullName: "",
+          sectors: [],
+          consent: false,
+        },
   });
 
   const {
     reset,
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     setValue,
     getValues,
   } = methods;
 
-  const onSubmit: SubmitHandler<IApplicationFormSchema> = (data) =>
-    console.log(data);
+  const onSubmit: SubmitHandler<IApplicationFormSchema> = async (data) => {
+    const axiosAction: Promise<any> =
+      asyncDefaultValues && applicationId
+        ? axios.patch(`/api/submissions/${applicationId}`, data)
+        : axios.post("/api/submissions", data);
+
+    try {
+      const saveApplicationReq = axiosAction;
+      const result = (await saveApplicationReq).data;
+      
+      if (result.success) {
+        reset();
+        router.push(`/search/${result.data.id}`);
+      }
+    } catch (err) {
+      alert("Something went wrong, Try again!");
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -69,7 +97,7 @@ const ApplicationForm = ({ initialSectors }: IApplicationForm) => {
             Agree to terms
           </p>
         </div>
-        <Button type="submit">Submit</Button>
+        <Button disabled={isSubmitting} type="submit">Submit</Button>
       </div>
     </form>
   );

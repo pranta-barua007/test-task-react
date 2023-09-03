@@ -30,7 +30,7 @@ function MultiSelect({
   const [hasMoreData, setHasMoreData] = React.useState<Sector[]>([]);
 
   const fetchMore = async (sectorId: number | string) => {
-    const req = axios.get(`http://localhost:3000/api/sectors/${sectorId}`);
+    const req = axios.get(`/api/sectors/${sectorId}`);
     return (await req).data as Sector;
   };
 
