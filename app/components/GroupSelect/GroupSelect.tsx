@@ -18,7 +18,7 @@ type SingleSelectProps = {
   onChange: (value: Sector | undefined) => void;
 };
 
-type SelectProps = {
+type GroupSelectProps = {
   options: Sector[];
   label: string;
   errorMessage?: string;
@@ -31,7 +31,7 @@ export default function GroupSelect({
   options,
   label,
   errorMessage,
-}: SelectProps) {
+}: GroupSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(0);
 
@@ -39,9 +39,11 @@ export default function GroupSelect({
     multiple ? onChange([]) : onChange(undefined);
   }
 
+  //TODO: item in 1st index of option doesn't show on the array while logging
+  //TODO: duplicate filtering is also broken
   function selectOption(option: Sector) {
     if (multiple) {
-      //console.log({value, option, is: value.includes(option, option.value as number)})
+     //console.log({value, option, is: value.includes(option, option.value as number)})
       // for(const item of value) {
       //   console.log({item, option})
       //   if(item.id === option.id) {

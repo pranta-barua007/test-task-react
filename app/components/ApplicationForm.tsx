@@ -68,6 +68,7 @@ const ApplicationForm = ({
       alert("Something went wrong, Try again!");
     }
   };
+  
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
