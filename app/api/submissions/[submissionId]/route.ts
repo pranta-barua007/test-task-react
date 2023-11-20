@@ -51,6 +51,7 @@ export async function PATCH(req: Request, { params }: { params: IParams }) {
             data: {
                 fullName,
                 sectors: {
+                   set: [],
                    connect: sectors.map((s: {id: string}) => ({id: s.id}))
                 }
             }

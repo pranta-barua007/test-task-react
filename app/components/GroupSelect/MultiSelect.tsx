@@ -20,7 +20,6 @@ type IMultiSelect = {
 
 function MultiSelect({
   option,
-  index,
   highlightedIndex,
   setHighlightedIndex,
   onClickHandler,
@@ -47,6 +46,7 @@ function MultiSelect({
         if (option.hasNext && !option.subSectors) {
           const data = await fetchMore(option.id);
           if (data.subSectors) {
+            console.log({data})
             setHasMoreData(data.subSectors);
           }
         }

@@ -41,9 +41,21 @@ export default function GroupSelect({
 
   function selectOption(option: Sector) {
     if (multiple) {
+      //console.log({value, option, is: value.includes(option, option.value as number)})
+      // for(const item of value) {
+      //   console.log({item, option})
+      //   if(item.id === option.id) {
+      //     console.log('includes')
+      //     onChange(value.filter((o) => o.id !== option.id));
+      //   }else {
+      //     onChange([...value, option]);
+      //   }
+      // }
       if (value.includes(option)) {
-        onChange(value.filter((o) => o !== option));
+        //console.log('includes', value.filter((o) => o.id !== option.id))
+        onChange(value.filter((o) => o.id !== option.id));
       } else {
+        //console.log('NoT-includes')
         onChange([...value, option]);
       }
     } else {
